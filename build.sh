@@ -12,5 +12,6 @@ browserify \
     node_modules/d3/d3.js \
     node_modules/lodash/index.js \
     src/js/graph/canvas.js \
+    src/js/utils.js \
     src/js/app.js \
     > ./dist/js/bundle.js

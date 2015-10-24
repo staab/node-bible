@@ -1,0 +1,20 @@
+{
+    "predef": [
+        "require",
+        "window",
+        "document",
+        "module",
+        "console"
+    ],
+    "bitwise": true,
+    "curly": true,
+    "eqeqeq": true,
+    "es5": true,
+    "forin": true,
+    "freeze": true,
+    "funcscope": true,
+    "futurehostile": true,
+    "strict": true,
+    "unused": true,
+    "maxcomplexity": 4
+}

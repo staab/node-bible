@@ -28,3 +28,7 @@ node_modules
 
 # Built assets directory
 dist
+
+# Local config
+node-bible.sublime-project
+node-bible.sublime-workspace

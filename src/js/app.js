@@ -1,29 +1,65 @@
-var d3 = require('d3'),
-    createCanvas = require('./graph/canvas'),
-    canvas;
+"use strict";
 
-canvas = createCanvas({
-    parent: 'body',
-    width: 960,
-    height: 600
+var _ = require('lodash'),
+    d3 = require('d3'),
+    utils = require('./utils'),
+    createCanvas = require('./graph/canvas'),
+    canvas,
+    dragFrom;
+
+function getNodesAt(canvas, point) {
+    var nodes = canvas.layout.nodes(),
+        radius;
+
+    if (!nodes.length) {
+        return false;
+    }
+
+    radius = canvas.svg.selectAll(".node").attr('r');
+
+    return canvas.svg.selectAll(".node").filter(function (node) {
+        return utils.circleContains(node, radius, point);
+    });
+}
+
+utils.onResize(function (width, height) {
+    if (canvas) {
+        canvas.svg.remove();
+    }
+
+    canvas = createCanvas({
+        parent: 'body',
+        width: width,
+        height: height
+    });
 });
 
 canvas.svg.on('mousedown', function mousedown() {
-    var point = d3.mouse(this),
-        node = {x: point[0], y: point[1]},
-        n = canvas.layout.nodes().push(node);
+    var pos = d3.mouse(this),
+        point = {x: pos[0], y: pos[1]},
+        nodes = getNodesAt(canvas, point);
 
-    // add links to any nearby nodes
-    canvas.layout.nodes().forEach(function(target) {
-        var x = target.x - node.x,
-            y = target.y - node.y;
+    // Unpack the group and grab
+    dragFrom = _.first(_.first(nodes));
+});
 
-        if (Math.sqrt(x * x + y * y) < 30) {
-            canvas.layout.links().push({source: node, target: target});
-        }
-    });
+canvas.svg.on('mouseup', function mouseup() {
+    var pos = d3.mouse(this),
+        point = {x: pos[0], y: pos[1]},
+        nodes = getNodesAt(canvas, point),
+        node =  _.first(_.first(nodes));
 
-    canvas.draw();
+    if (dragFrom && dragFrom === node) {
+        // Toggle class
+        nodes.classed('selected', function () {
+            return !d3.select(this).classed('selected');
+        });
+    } else if (dragFrom && node) {
+        // Add an edge
+        canvas.addEdge(dragFrom.__data__, node.__data__);
+    } else if (!dragFrom) {
+        canvas.addNode(point);
+    }
 });
 
 canvas.draw();
