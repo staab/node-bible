@@ -1,0 +1,30 @@
+svg {
+    rect {
+        fill: none;
+        pointer-events: all;
+    }
+
+    .node {
+        circle {
+            fill: #000000;
+        }
+
+        text {
+            fill: red;
+            font-family: helvetica;
+            font-weight: 600;
+        }
+
+        &.selected {
+            circle {
+                stroke-width: 5px;
+                stroke: green;
+            }
+        }
+    }
+
+    .link {
+        stroke: #999;
+        stroke-width: 5px;
+    }
+}

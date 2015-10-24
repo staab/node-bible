@@ -23,15 +23,18 @@ function getNodesAt(canvas, point) {
     });
 }
 
-utils.onResize(function (width, height) {
+utils.onResize(function () {
+    var parent = document.querySelector('#primary-content');
+
     if (canvas) {
         canvas.svg.remove();
     }
+    console.log(parent);
 
     canvas = createCanvas({
-        parent: 'body',
-        width: width,
-        height: height
+        parent: parent,
+        width: parent.offsetWidth,
+        height: parent.offsetHeight
     });
 });
 
@@ -58,8 +61,6 @@ canvas.svg.on('mouseup', function mouseup() {
     } else if (dragFrom && node) {
         // Add an edge
         canvas.addEdge(dragFrom.__data__, node.__data__);
-    } else if (!dragFrom) {
-        canvas.addNode(point);
     }
 });
 

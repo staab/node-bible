@@ -32,3 +32,6 @@ dist
 # Local config
 node-bible.sublime-project
 node-bible.sublime-workspace
+
+# Sass cache
+.sass-cache

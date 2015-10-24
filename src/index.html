@@ -1,36 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html class="full-height">
 <head>
     <title>Node Bible</title>
-    <style type="text/css">
-    <style>
-        rect {
-            fill: none;
-            pointer-events: all;
-        }
-
-        .node circle {
-            fill: #FFFFFF;
-        }
-
-        .node text {
-            fill: red;
-            font-family: helvetica;
-            font-weight: 600;
-        }
-
-        .node.selected circle {
-            stroke-width: 5px;
-            stroke: green;
-        }
-
-        .link {
-            stroke: #999;
-            stroke-width: 5px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="/css/bundle.css" />
 </head>
-<body>
+<body class="full-height">
+    <table class="full-height full-width">
+        <tr class="full-height full-width">
+            <td id="primary-sidebar" class="col-3 bg-ambient"></td>
+            <td id="primary-content" class="col-9"></td>
+        </tr>
+    </table>
     <script type="text/javascript" src="/js/bundle.js"></script>
 </body>
 </html>

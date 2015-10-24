@@ -23,6 +23,8 @@ Collections group nodes and edges
 # Installation
 
 ```
+sudo apt-get update && sudo apt-get install -y ruby
+sudo gem install sass
 npm install
 ```
 
