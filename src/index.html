@@ -9,19 +9,19 @@
             pointer-events: all;
         }
 
-        .node {
+        .node circle {
             fill: #FFFFFF;
         }
 
-        .node.selected {
-            stroke-width: 5px;
-            stroke: green;
+        .node text {
+            fill: red;
+            font-family: helvetica;
+            font-weight: 600;
         }
 
-        .cursor {
-            fill: none;
-            stroke: brown;
-            pointer-events: none;
+        .node.selected circle {
+            stroke-width: 5px;
+            stroke: green;
         }
 
         .link {

@@ -14,4 +14,5 @@ browserify \
     src/js/graph/canvas.js \
     src/js/utils.js \
     src/js/app.js \
+    src/js/demo-data.js \
     > ./dist/js/bundle.js

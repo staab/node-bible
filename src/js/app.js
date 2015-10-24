@@ -4,6 +4,7 @@ var _ = require('lodash'),
     d3 = require('d3'),
     utils = require('./utils'),
     createCanvas = require('./graph/canvas'),
+    demoData = require('./demo-data'),
     canvas,
     dragFrom;
 
@@ -15,7 +16,7 @@ function getNodesAt(canvas, point) {
         return false;
     }
 
-    radius = canvas.svg.selectAll(".node").attr('r');
+    radius = canvas.svg.selectAll(".node circle").attr('r');
 
     return canvas.svg.selectAll(".node").filter(function (node) {
         return utils.circleContains(node, radius, point);
@@ -60,6 +61,15 @@ canvas.svg.on('mouseup', function mouseup() {
     } else if (!dragFrom) {
         canvas.addNode(point);
     }
+});
+
+// Add demo data
+_.forEach(demoData.nodes, function (node) {
+    console.log(node);
+    canvas.addNode(node);
+});
+_.forEach(demoData.edges, function (edge) {
+    canvas.addEdge(edge);
 });
 
 canvas.draw();
