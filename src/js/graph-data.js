@@ -33,7 +33,7 @@ GraphData.prototype.validateData = function validateData(nodes, links) {
         utils.assertIn(node, ['name', 'type', 'x', 'y']);
 
         console.assert(
-            node.type in ['Person', 'Thing', 'Place'],
+            _.includes(['Person', 'Thing', 'Place'], node.type),
             _.template('Invalid node type, ${type}.')(node)
         );
 
@@ -51,12 +51,12 @@ GraphData.prototype.validateData = function validateData(nodes, links) {
     _.forEach(links, function (link) {
         console.assert(
             _.includes(nodes, link.source),
-            _.template("Invalid node, ${node}", {node: JSON.dumps(link.source)})
+            _.template("Invalid node, ${node}", {node: JSON.stringify(link.source)})
         );
 
         console.assert(
             _.includes(nodes, link.target),
-            _.template("Invalid node, ${node}", {node: JSON.dumps(link.target)})
+            _.template("Invalid node, ${node}", {node: JSON.stringify(link.target)})
         );
     });
 };

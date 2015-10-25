@@ -3,91 +3,88 @@
 var _ = require('lodash'),
     d3 = require('d3'),
     utils = require('./utils'),
-    createCanvas = require('./graph/canvas'),
-    demoData = require('./demo-data'),
-    canvas,
+    graphing = require('./graph-svg'),
+    GraphData = require('./graph-data'),
+    graphData = new GraphData(),
+    graph,
     dragFrom;
 
-function getNodesAt(canvas, point) {
-    var nodes = canvas.layout.nodes(),
-        radius;
-
-    if (!nodes.length) {
-        return false;
-    }
-
-    radius = canvas.svg.selectAll(".node circle").attr('r');
-
-    return canvas.svg.selectAll(".node").filter(function (node) {
-        return utils.circleContains(node, radius, point);
-    });
-}
-
-utils.onResize(function () {
+(function initGraph() {
     var parent = document.querySelector('#primary-content');
 
-    if (canvas) {
-        canvas.svg.remove();
-    }
-
-    canvas = createCanvas({
+    graph = new graphing.Graph({
         parent: parent,
         width: parent.offsetWidth,
-        height: parent.offsetHeight
+        height: parent.offsetHeight,
+        layout: graphing.layouts.force
     });
-});
 
-canvas.svg.on('mousedown', function mousedown() {
-    var pos = d3.mouse(this),
-        point = {x: pos[0], y: pos[1]},
-        nodes = getNodesAt(canvas, point);
+    graph.layout.nodes(graphData.nodes);
+    graph.layout.links(graphData.links);
 
-    // Unpack the group and grab
-    dragFrom = _.first(_.first(nodes));
-});
+    graph.draw();
+}());
 
-canvas.svg.on('mouseup', function mouseup() {
-    var pos = d3.mouse(this),
-        point = {x: pos[0], y: pos[1]},
-        nodes = getNodesAt(canvas, point),
-        node =  _.first(_.first(nodes));
 
-    if (dragFrom && dragFrom === node) {
-        // Toggle class
-        nodes.classed('selected', function () {
-            return !d3.select(this).classed('selected');
-        });
-    } else if (dragFrom && node) {
-        // Add an edge
-        canvas.addEdge(dragFrom.__data__, node.__data__);
-    }
-});
+// function getNodesAt(canvas, point) {
+//     var nodes = canvas.layout.nodes(),
+//         radius;
 
-// Add demo data
-_.forEach(demoData.nodes, function (node) {
-    console.log(node);
-    canvas.addNode(node);
-});
-_.forEach(demoData.edges, function (edge) {
-    canvas.addEdge(edge);
-});
+//     if (!nodes.length) {
+//         return false;
+//     }
 
-canvas.draw();
+//     radius = canvas.svg.selectAll(".node circle").attr('r');
 
-// Window methods
+//     return canvas.svg.selectAll(".node").filter(function (node) {
+//         return utils.circleContains(node, radius, point);
+//     });
+// }
 
-window.g = {
-    filterNodesByType: function filterNodesByType(element) {
-        var value = element.querySelector(':checked').getAttribute('value');
+// utils.onResize(function () {
+//     var parent = document.querySelector('#primary-content');
 
-        canvas.svg.selectAll(".link").data(_.filter(function (d) {
-            return d.source.type === value && d.target.type === value;
-        });
+//     graph.setSize(parent.offsetWidth, parent.offsetHeight);
+// });
 
-        canvas.svg.selectAll(".node").data(_.filter(function (d) {
-            return d.type === value;
-        });
+// canvas.svg.on('mousedown', function mousedown() {
+//     var pos = d3.mouse(this),
+//         point = {x: pos[0], y: pos[1]},
+//         nodes = getNodesAt(canvas, point);
 
-        canvas.draw();
-    }
-};
+//     // Unpack the group and grab
+//     dragFrom = _.first(_.first(nodes));
+// });
+
+// canvas.svg.on('mouseup', function mouseup() {
+//     var pos = d3.mouse(this),
+//         point = {x: pos[0], y: pos[1]},
+//         nodes = getNodesAt(canvas, point),
+//         node =  _.first(_.first(nodes));
+
+//     if (dragFrom && dragFrom === node) {
+//         // Toggle class
+//         nodes.classed('selected', function () {
+//             return !d3.select(this).classed('selected');
+//         });
+//     } else if (dragFrom && node) {
+//         // Add an edge
+//         canvas.addEdge(dragFrom.__data__, node.__data__);
+//     }
+// });
+
+// window.g = {
+//     filterNodesByType: function filterNodesByType(element) {
+//         var value = element.querySelector(':checked').getAttribute('value');
+
+//         canvas.svg.selectAll(".link").data(_.filter(function (d) {
+//             return d.source.type === value && d.target.type === value;
+//         });
+
+//         canvas.svg.selectAll(".node").data(_.filter(function (d) {
+//             return d.type === value;
+//         });
+
+//         canvas.draw();
+//     }
+// };
