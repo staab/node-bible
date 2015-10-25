@@ -2,14 +2,16 @@
 
 var _ = require('lodash'),
     d3 = require('d3'),
+    ui = require('./ui'),
     utils = require('./utils'),
     graphing = require('./graph-svg'),
     GraphData = require('./graph-data'),
     graphData = new GraphData(),
+    app,
     graph,
     dragFrom;
 
-(function initGraph() {
+function App() {
     var parent = document.querySelector('#primary-content');
 
     graph = new graphing.Graph({
@@ -23,7 +25,10 @@ var _ = require('lodash'),
     graph.layout.links(graphData.links);
 
     graph.draw();
-}());
+}
+
+app = new App();
+
 
 
 // function getNodesAt(canvas, point) {
