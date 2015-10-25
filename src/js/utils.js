@@ -28,11 +28,11 @@ function objectId(obj) {
         return null;
     }
 
-    if (obj.__id === null) {
-        obj.__id = uuid4();
+    if (obj.__uuid === undefined) {
+        obj.__uuid = uuid4();
     }
 
-    return obj.__obj_id;
+    return obj.__uuid;
 }
 
 // From https://gist.github.com/kaizhu256/2853704

@@ -79,36 +79,6 @@ Graph.prototype.tick = function tick() {
     });
 };
 
-Graph.prototype.addNode = function addNode(node) {
-    var self = this;
-
-    self.layout.nodes().push(node);
-
-    self.draw();
-};
-
-Graph.prototype.addLink = function addLink(link) {
-    var self = this,
-        duplicate;
-
-    // Avoid duplicate links
-    duplicate = _.find(self.layout.links(), function (data) {
-        return (
-            (data.source === link.source && data.target === link.target) ||
-            (data.source === link.target && data.target === link.source)
-        );
-    });
-
-    if (duplicate) {
-        return;
-    }
-
-    // Create the link
-    self.layout.links().push(link);
-
-    self.draw();
-};
-
 module.exports = {
     Graph: Graph,
     layouts: {

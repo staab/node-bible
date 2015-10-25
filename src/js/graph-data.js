@@ -49,6 +49,8 @@ GraphData.prototype.validateData = function validateData(nodes, links) {
     });
 
     _.forEach(links, function (link) {
+        utils.assertIn(link, ['source', 'target', 'annotation', 'reference']);
+
         console.assert(
             _.includes(nodes, link.source),
             _.template("Invalid node, ${node}", {node: JSON.stringify(link.source)})
