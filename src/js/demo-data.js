@@ -1,15 +1,15 @@
 var _ = require('lodash'),
     nodes,
-    edges;
+    links;
 
 nodes = {
-    elijah: {name: 'Elijah', type: 'Person'},
-    ishmael: {name: 'Ishmael', type: 'Person'},
-    bush: {name: 'Bush', type: 'Thing'},
-    beersheba: {name: 'Beersheba', type: 'Place'},
+    elijah: {name: 'Elijah', type: 'Person', x: 0, y: 0},
+    ishmael: {name: 'Ishmael', type: 'Person', x: 0, y: 0},
+    bush: {name: 'Bush', type: 'Thing', x: 0, y: 0},
+    beersheba: {name: 'Beersheba', type: 'Place', x: 0, y: 0},
 };
 
-edges = [
+links = [
     {
         source: nodes.elijah,
         target: nodes.bush,
@@ -38,5 +38,5 @@ edges = [
 
 module.exports = {
     nodes: nodes,
-    edges: edges
+    links: links
 };

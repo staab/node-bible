@@ -14,6 +14,15 @@ function ifArray(value, fn) {
     return fn(value);
 }
 
+function assertIn(obj, paths) {
+    _.forEach(paths, function (path) {
+        console.assert(
+            _.get(obj, path) !== undefined,
+            "Object must have " + path
+        );
+    });
+}
+
 // ====================================
 // DOM Manipulation
 // ====================================
@@ -46,6 +55,7 @@ function circleContains(target, radius, point) {
 
 module.exports = {
     ifArray: ifArray,
+    assertIn: assertIn,
     onResize: onResize,
     mousePos: mousePos,
     circleContains: circleContains

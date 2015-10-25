@@ -1,10 +1,27 @@
 @import '_variables';
 
+html, body {
+    font-family: helvetica;
+}
+
+select {
+    border: 0;
+    margin-left: -4px;
+}
+
 // Layout
+
+.top-aligned td {
+    vertical-align: top;
+}
 
 .full-height {
     position: relative;
     height: 100%;
+}
+
+.inline-block {
+    display: inline-block;
 }
 
 .col-1 {
@@ -55,6 +72,10 @@
     width: 100%
 }
 
+.section {
+    padding: $margin;
+}
+
 // Color
 
 .text-ambient {
@@ -63,4 +84,5 @@
 
 .bg-ambient {
     background-color: $color-ambient;
+    color: $color-ambient-contrast;
 }

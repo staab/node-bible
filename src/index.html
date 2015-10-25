@@ -5,12 +5,23 @@
     <link rel="stylesheet" type="text/css" href="/css/bundle.css" />
 </head>
 <body class="full-height">
-    <table class="full-height full-width">
-        <tr class="full-height full-width">
-            <td id="primary-sidebar" class="col-3 bg-ambient"></td>
-            <td id="primary-content" class="col-9"></td>
-        </tr>
-    </table>
-    <script type="text/javascript" src="/js/bundle.js"></script>
+<table class="full-height full-width top-aligned">
+<tr class="full-height full-width">
+    <td id="primary-sidebar" class="col-3 bg-ambient">
+        <div class="section">
+            <label class="col-6 inline-block">Node Type</label>
+            <select class="col-6 inline-block"
+                onchange="g.filterNodesByType(this)">
+                <option value="">All</option>
+                <option value="Person">Person</option>
+                <option value="Thing">Thing</option>
+                <option value="Place">Place</option>
+            </select>
+        </div>
+    </td>
+    <td id="primary-content" class="col-9"></td>
+</tr>
+</table>
+<script type="text/javascript" src="/js/bundle.js"></script>
 </body>
 </html>

@@ -29,7 +29,6 @@ utils.onResize(function () {
     if (canvas) {
         canvas.svg.remove();
     }
-    console.log(parent);
 
     canvas = createCanvas({
         parent: parent,
@@ -75,3 +74,20 @@ _.forEach(demoData.edges, function (edge) {
 
 canvas.draw();
 
+// Window methods
+
+window.g = {
+    filterNodesByType: function filterNodesByType(element) {
+        var value = element.querySelector(':checked').getAttribute('value');
+
+        canvas.svg.selectAll(".link").data(_.filter(function (d) {
+            return d.source.type === value && d.target.type === value;
+        });
+
+        canvas.svg.selectAll(".node").data(_.filter(function (d) {
+            return d.type === value;
+        });
+
+        canvas.draw();
+    }
+};
