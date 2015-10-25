@@ -23,6 +23,28 @@ function assertIn(obj, paths) {
     });
 }
 
+function objectId(obj) {
+    if (obj === null) {
+        return null;
+    }
+
+    if (obj.__id === null) {
+        obj.__id = uuid4();
+    }
+
+    return obj.__obj_id;
+}
+
+// From https://gist.github.com/kaizhu256/2853704
+function uuid4(){
+    var _uuid4 = function(cc) {
+        var rr = Math.random() * 16 | 0;
+        return (cc === 'x' ? rr : (rr & 0x3 | 0x8)).toString(16);
+    };
+
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, _uuid4);
+}
+
 // ====================================
 // DOM Manipulation
 // ====================================
@@ -56,6 +78,8 @@ function circleContains(target, radius, point) {
 module.exports = {
     ifArray: ifArray,
     assertIn: assertIn,
+    objectId: objectId,
+    uuid4: uuid4,
     onResize: onResize,
     mousePos: mousePos,
     circleContains: circleContains

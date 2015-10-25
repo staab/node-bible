@@ -37,6 +37,6 @@ links = [
 ];
 
 module.exports = {
-    nodes: nodes,
+    nodes: _.values(nodes),
     links: links
 };

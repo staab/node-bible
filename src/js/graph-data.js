@@ -2,17 +2,34 @@
 
 var _ = require('lodash'),
     utils = require('./utils'),
-    data = require('./demo-data');
+    demoData = require('./demo-data');
 
-function GraphData(nodes, links) {
-    var self = this;
+function GraphData() {
+    var self = this,
+        data = self.getData();
 
-    self.nodes = self.validateNodes(nodes);
-    self.links = self.validateLinks(links);
+    self.nodes = [];
+    self.links = [];
+
+    self.setData(data.nodes, data.links);
 }
 
-GraphData.prototype.validateNodes = function validateNodes(nodes) {
-    return _.forEach(nodes, function (node) {
+
+GraphData.prototype.getData = function getData() {
+    return demoData;
+};
+
+GraphData.prototype.setData = function setData(nodes, links) {
+    var self = this;
+
+    self.validateData(nodes, links);
+
+    self.nodes = self.normalizeNodes(nodes, links);
+    self.links = self.normalizeLinks(nodes, links);
+};
+
+GraphData.prototype.validateData = function validateData(nodes, links) {
+    _.forEach(nodes, function (node) {
         utils.assertIn(node, ['name', 'type', 'x', 'y']);
 
         console.assert(
@@ -29,14 +46,29 @@ GraphData.prototype.validateNodes = function validateNodes(nodes) {
             _.isNumber(node.y),
             _.template("Invalid y value, ${y}")(node)
         );
+    });
 
-        return node;
+    _.forEach(links, function (link) {
+        console.assert(
+            _.includes(nodes, link.source),
+            _.template("Invalid node, ${node}", {node: JSON.dumps(link.source)})
+        );
+
+        console.assert(
+            _.includes(nodes, link.target),
+            _.template("Invalid node, ${node}", {node: JSON.dumps(link.target)})
+        );
     });
 };
 
-GraphData.prototype.validateLinks = function validateLinks(links) {
-    Check that every link has two valid nodes, and remove duplicates
+GraphData.prototype.normalizeNodes = function normalizeNodes(nodes, links) {
+    return nodes;
 };
 
+GraphData.prototype.normalizeLinks = function normalizeLinks(nodes, links) {
+    return _.uniq(links, function (link) {
+        return utils.objectId(link.source) + utils.objectId(link.target);
+    });
+};
 
 module.exports = GraphData;
