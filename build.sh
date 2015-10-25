@@ -10,4 +10,4 @@ cp src/index.html ./dist/index.html
 scss -I src/css src/css/bundle.scss dist/css/bundle.css
 
 # Js
-browserify -t babelify src/js/app.js > ./dist/js/bundle.js
+browserify src/js/app.js > ./dist/js/bundle.js

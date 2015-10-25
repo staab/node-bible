@@ -13,8 +13,8 @@ function Graph(opts) {
     self.svg = d3.select(opts.parent).append('svg');
     self.svg.append("rect");
 
-    self.setSize(opts.width, opts.height);
     self.setLayout(opts.layout);
+    self.setSize(opts.width, opts.height);
 }
 
 Graph.prototype.setSize = function setSize(width, height) {
@@ -22,12 +22,13 @@ Graph.prototype.setSize = function setSize(width, height) {
 
     self.svg.attr('width', width).attr('height', height);
     self.svg.select('rect').attr('width', width).attr('height', height);
+    self.layout.size([width, height]);
 };
 
-Graph.prototype.setLayout = function setLayout(layout) {
+Graph.prototype.setLayout = function setLayout(layoutFn) {
     var self = this;
 
-    self.layout = layout(self, self.svg.attr('width'), self.svg.attr('height'));
+    self.layout = layoutFn(self);
 };
 
 Graph.prototype.draw = function draw() {
@@ -111,9 +112,8 @@ Graph.prototype.addLink = function addLink(link) {
 module.exports = {
     Graph: Graph,
     layouts: {
-        force: function force(graph, width, height) {
+        force: function force(graph) {
             return d3.layout.force()
-                .size([width, height])
                 .linkDistance(200)
                 .charge(-400)
                 .on("tick", graph.tick.bind(graph));

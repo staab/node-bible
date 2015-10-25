@@ -1,19 +1,15 @@
 "use strict";
 
 var _ = require('lodash'),
-    d3 = require('d3'),
     ui = require('./ui'),
     utils = require('./utils'),
     graphing = require('./graph-svg'),
     GraphData = require('./graph-data'),
     graphData = new GraphData(),
-    app,
     graph,
     dragFrom;
 
-function App() {
-    var parent = document.querySelector('#primary-content');
-
+function createGraph(parent) {
     graph = new graphing.Graph({
         parent: parent,
         width: parent.offsetWidth,
@@ -25,9 +21,25 @@ function App() {
     graph.layout.links(graphData.links);
 
     graph.draw();
+
+    // Listen for resize
+    utils.onResize(function () {
+        var width = Math.min(parent.offsetWidth, window.innerWidth),
+            height = Math.min(parent.offsetHeight, window.innerHeight);
+
+        graph.setSize(width, height);
+    });
+
+    return graph;
 }
 
-app = new App();
+function App() {
+    var self = this;
+
+    self.graph = createGraph(document.querySelector('#primary-content'));
+}
+
+window.app = new App();
 
 
 
@@ -46,11 +58,6 @@ app = new App();
 //     });
 // }
 
-// utils.onResize(function () {
-//     var parent = document.querySelector('#primary-content');
-
-//     graph.setSize(parent.offsetWidth, parent.offsetHeight);
-// });
 
 // canvas.svg.on('mousedown', function mousedown() {
 //     var pos = d3.mouse(this),
