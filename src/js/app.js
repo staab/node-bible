@@ -2,7 +2,6 @@
 
 var _ = require('lodash'),
     d3 = require('d3'),
-    ui = require('./ui'),
     utils = require('./utils'),
     graphing = require('./graph-svg'),
     GraphData = require('./graph-data');
